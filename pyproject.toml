@@ -1,0 +1,69 @@
+[project]
+name = "mcp_svr1"
+dynamic = ["version"]
+description = "Python template and samples for MCP server."
+readme = "README.md"
+License = { file = "LICENSE" }
+authors = [
+    { name = "Yoichi Tanibayashi", email = "yoichi@tanibayashi.jp" }
+]
+keywords = ["mcp", "mcp server"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+]
+requires-python = ">=3.13"
+dependencies = [
+    "asyncio>=4.0.0",
+    "click>=8.2.1",
+    "fastmcp>=2.12.2",
+    "mcp>=1.13.1",
+]
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.ruff]
+line-length = 78
+target-version = "py311"
+lint.select = ["E", "F", "I"]
+exclude = ["tests/data"]
+
+[tool.pyright]
+typeCheckingMode = "standard"
+
+[tool.pytest.ini_options]
+pythonpath = "tests"
+
+[tool.mypy]
+mypy_path = "src"
+
+[dependency-groups]
+dev = [
+    "mypy>=1.17.0",
+    "pytest>=8.4.1",
+    "pytest-asyncio",
+    "pytest-mock",
+    "ruff>=0.12.3",
+    "flake8>=7.3.0",
+    "isort>=6.0.1",
+    "pylint>=3.3.7",
+    "pyright>=1.1.403",
+    "hatch",
+    "watchdog>=4.0.1",
+]
+
+[[tool.mypy.overrides]]
+module = ['fastmcp']
+ignore_missing_imports = true
+
+[tool.hatch.publish.test]
+repository = "https://test.pypi.org/legacy/"
+
+[tool.hatch.publish.pypi]
+
