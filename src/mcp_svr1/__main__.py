@@ -11,7 +11,7 @@ else:
     __version__ = "_._._"
 
 
-mcp = FastMCP("mcp_svr0")
+mcp = FastMCP("mcp_svr1")
 
 @mcp.tool()
 def add(a: int, b: int) -> int:
