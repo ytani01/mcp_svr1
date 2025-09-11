@@ -28,6 +28,9 @@ build-backend = "hatchling.build"
 [tool.hatch.version]
 source = "vcs"
 
+[project.scripts]
+mcp_svr1 = "mcp_svr1.__main__:main"
+
 [tool.ruff]
 line-length = 78
 target-version = "py311"

@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "mymcp": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "$HOME/work/mcp_svr1",
+        "run",
+        "mcp_svr1"
+      ]
+    }
+  },
+  "selectedAuthType": "oauth-personal",
+  "theme": "Ayu"
+}
