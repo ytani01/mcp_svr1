@@ -114,3 +114,10 @@ Gemini CLI のための開発ルール。
   - 原則として、`ToDo.md` の1項目 = `Tasks.md`ファイルが1つ。
   - `Tasks.md` を作成したら、実行する前に必ずユーザーに確認を求めること。
   - ユーザーが **"go ahead"** と言った場合は、タスクを順に実行する。
+
+## serena MCPサーバーの利用
+
+- 起動時に必ず以下のコマンド実行して、serana MCPサーバーを初期化する。
+  - `serena.activate_project`
+  - `serena.onboarding`
+ 
