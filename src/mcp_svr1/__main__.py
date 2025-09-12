@@ -26,7 +26,7 @@ def subtract(a: int, b: int) -> int:
 @mcp.tool()
 def version() -> str:
     """Returns the server version."""
-    return __version__
+    return f"{__package__} {__version__}"
 
 @mcp.tool()
 def echo(text: str) -> str:
