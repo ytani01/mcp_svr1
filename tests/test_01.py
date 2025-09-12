@@ -1,0 +1,30 @@
+import pytest
+from fastmcp.client import Client
+
+from mcp_svr1.__main__ import mcp
+
+
+@pytest.mark.asyncio
+async def test_add():
+    async with Client(mcp) as client:
+        result = await client.call_tool("add", {"a": 1, "b": 2})
+        assert result.data.result == 3
+
+@pytest.mark.asyncio
+async def test_subtract():
+    async with Client(mcp) as client:
+        result = await client.call_tool("subtract", {"a": 5, "b": 3})
+        assert result.data.result == 2
+
+@pytest.mark.asyncio
+async def test_version():
+    async with Client(mcp) as client:
+        result = await client.call_tool("version", {})
+        assert result.data.result.startswith("mcp_svr1")
+
+@pytest.mark.asyncio
+async def test_echo():
+    async with Client(mcp) as client:
+        test_string = "hello"
+        result = await client.call_tool("echo", {"text": test_string})
+        assert result.data.result == test_string

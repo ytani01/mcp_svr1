@@ -1,22 +1,15 @@
 # Suggested Commands
 
-## Project Management
-- **Install/Add Libraries**: `uv add <package_name>`
+## General Commands:
+*   **Run Entrypoint:** `uv run mcp_svr1`
+*   **Linting:** `uv run ruff check src/ tests/`
+*   **Type Checking (Mypy):** `uv run mypy src/ tests/`
+*   **Type Checking (Pyright):** `uv run pyright src/ tests/`
+*   **Testing:** `uv run python -m pytest -v`
 
-## Linting
-- `uv run ruff check ...`
-- `uv run mypy ...`
-- `uv run pyright ...`
-
-## Testing
-- **Run Tests**: `uv run python -m pytest -v ...`
-
-## Running the Project
-- The `README.md` shows an example of running the `mcp_svr1` server via Gemini CLI configuration. The command is `uv --directory $HOME/work/mcp_svr1 run mcp_svr1`.
-
-## Utility Commands (Linux)
-- `git`: Version control commands (e.g., `git status`, `git diff`, `git log`)
-- `ls`: List directory contents
-- `cd`: Change directory
-- `grep`: Search for patterns in files
-- `find`: Search for files in a directory hierarchy
+## Utility Commands (Linux):
+*   `git`
+*   `ls`
+*   `cd`
+*   `grep`
+*   `find`
