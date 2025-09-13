@@ -1,7 +1,10 @@
 # Task Completion Guidelines
 
-When a task is completed, the following steps should be performed:
-1.  Run linting: `uv run ruff check src/ tests/`
-2.  Run type checking: `uv run mypy src/ tests/` and `uv run pyright src/ tests/`
-3.  Run tests: `uv run python -m pytest -v`
-4.  Update `Tasks.md` to mark the completed task.
+## When a Task is Completed
+- After modifying source code, always run linting and testing.
+  - Linting: `uv run ruff check ...`, `uv run mypy ...`, `uv run pyright ...`
+  - Testing: `uv run python -m pytest -v ...`
+- If all tasks in `Tasks.md` are completed:
+  1. Report completion to the user.
+  2. Prompt the user to update `ToDo.md`.
+  3. Run `uv run rename_task.py` to rename `Tasks.md` and move it to the `archives` directory.

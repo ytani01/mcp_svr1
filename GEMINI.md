@@ -4,7 +4,7 @@ Gemini CLI のための開発ルール。
 
 ## == プロジェクトの目標
 
-- **FastMCP** を使用した **MCPサーバー** のPythonプロジェクトを提供する。
+- **FastMCP** を使用した **MCP(Model Context Protocol)サーバー** のPythonプロジェクト。
 - テンプレート、または、サンプルとして使うことが目的
 
 ### === 参考情報

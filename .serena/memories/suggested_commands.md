@@ -1,15 +1,19 @@
 # Suggested Commands
 
-## General Commands:
-*   **Run Entrypoint:** `uv run mcp_svr1`
-*   **Linting:** `uv run ruff check src/ tests/`
-*   **Type Checking (Mypy):** `uv run mypy src/ tests/`
-*   **Type Checking (Pyright):** `uv run pyright src/ tests/`
-*   **Testing:** `uv run python -m pytest -v`
+## Linting
+- `uv run ruff check ...`
+- `uv run mypy ...`
+- `uv run pyright ...`
 
-## Utility Commands (Linux):
-*   `git`
-*   `ls`
-*   `cd`
-*   `grep`
-*   `find`
+## Testing
+- `uv run python -m pytest -v ...`
+
+## Library Management
+- `uv add ...` (for installing/adding libraries)
+
+## Task Management
+- `uv run rename_task.py` (to rename and archive `Tasks.md` after completion)
+
+## Serena MCP Server
+- `serena.activate_project`
+- `serena.onboarding`

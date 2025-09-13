@@ -19,8 +19,8 @@ async def test_subtract():
 @pytest.mark.asyncio
 async def test_version():
     async with Client(mcp) as client:
-        result = await client.call_tool("version", {})
-        assert result.data.result.startswith("mcp_svr1")
+        result = await client.read_resource("server://version")
+        assert result[0].text.startswith("mcp_svr1")
 
 @pytest.mark.asyncio
 async def test_echo():
