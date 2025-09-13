@@ -18,6 +18,8 @@ requires-python = ">=3.13"
 dependencies = [
     "asyncio>=4.0.0",
     "click>=8.2.1",
+    "asyncclick",
+    "click-shell==2.1",
     "fastmcp>=2.12.2",
     "mcp>=1.13.1",
 ]
@@ -25,11 +27,15 @@ dependencies = [
 requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
 
+[tool.hatch.metadata]
+allow-direct-references = true
+
 [tool.hatch.version]
 source = "vcs"
 
 [project.scripts]
 mcp_svr1 = "mcp_svr1.__main__:main"
+mcp_client = "mcp_client.cli:main"
 
 [tool.ruff]
 line-length = 78
@@ -39,9 +45,12 @@ exclude = ["tests/data"]
 
 [tool.pyright]
 typeCheckingMode = "standard"
+reportMissingImports = "warning"
+ignore = ["src/mcp_client/cli.py"]
 
 [tool.pytest.ini_options]
-pythonpath = "tests"
+pythonpath = ["tests", "src"]
+asyncio_mode = "auto"
 
 [tool.mypy]
 mypy_path = "src"
@@ -64,6 +73,14 @@ dev = [
 [[tool.mypy.overrides]]
 module = ['fastmcp']
 ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ['mcp_client.utils']
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = ['mcp_client.cli']
+ignore_errors = true
 
 [tool.hatch.publish.test]
 repository = "https://test.pypi.org/legacy/"

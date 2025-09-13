@@ -16,7 +16,6 @@ register_version_resource(mcp)
 register_echo_tool(mcp)
 
 
-
 def main():
     mcp.run(transport="stdio")
 

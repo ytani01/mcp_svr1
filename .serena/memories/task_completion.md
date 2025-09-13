@@ -1,10 +1,17 @@
-# Task Completion Guidelines
+# Task Completion
 
-## When a Task is Completed
-- After modifying source code, always run linting and testing.
-  - Linting: `uv run ruff check ...`, `uv run mypy ...`, `uv run pyright ...`
-  - Testing: `uv run python -m pytest -v ...`
-- If all tasks in `Tasks.md` are completed:
-  1. Report completion to the user.
-  2. Prompt the user to update `ToDo.md`.
-  3. Run `uv run rename_task.py` to rename `Tasks.md` and move it to the `archives` directory.
+When you have completed a task, you should always perform the following steps:
+
+1.  **Run linting and type checking** to ensure the code is clean and correct:
+    ```bash
+    uv run ruff check .
+    uv run mypy .
+    uv run pyright
+    ```
+
+2.  **Run tests** to ensure that your changes have not broken anything:
+    ```bash
+    uv run python -m pytest -v
+    ```
+
+3.  If all checks and tests pass, **propose a commit message** to the user. The user is responsible for the final commit.

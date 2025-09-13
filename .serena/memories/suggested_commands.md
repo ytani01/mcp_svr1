@@ -1,19 +1,30 @@
 # Suggested Commands
 
-## Linting
-- `uv run ruff check ...`
-- `uv run mypy ...`
-- `uv run pyright ...`
+Here are some important commands for developing in this project:
 
-## Testing
-- `uv run python -m pytest -v ...`
+- **Run the MCP server:**
+  ```bash
+  uv run mcp_svr1
+  ```
 
-## Library Management
-- `uv add ...` (for installing/adding libraries)
+- **Run the MCP client:**
+  ```bash
+  uv run mcp_client
+  ```
 
-## Task Management
-- `uv run rename_task.py` (to rename and archive `Tasks.md` after completion)
+- **Run tests:**
+  ```bash
+  uv run python -m pytest -v
+  ```
 
-## Serena MCP Server
-- `serena.activate_project`
-- `serena.onboarding`
+- **Run linting and type checking:**
+  ```bash
+  uv run ruff check .
+  uv run mypy .
+  uv run pyright
+  ```
+
+- **Install new dependencies:**
+  ```bash
+  uv add <library-name>
+  ```

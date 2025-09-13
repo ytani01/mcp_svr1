@@ -1,5 +1,6 @@
 
 import pytest
+from typing import Any, cast
 from fastmcp.client import Client
 
 from mcp_svr1.__main__ import mcp
@@ -27,7 +28,7 @@ async def test_ping():
 async def test_version():
     async with Client(mcp) as client:
         result = await client.read_resource("server://version")
-        assert result[0].text.startswith("mcp_svr")
+        assert cast(Any, result[0]).text.startswith("mcp_svr")
 
 @pytest.mark.asyncio
 async def test_echo():
