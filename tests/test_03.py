@@ -41,29 +41,26 @@ async def test_list_tools(runner):
     # verboseなしのテスト
     result = await runner.invoke(mcp_client, ["list", "tools"])
     assert result.exit_code == 0
-    assert "利用可能なツール: " in result.output
-    assert "add" in result.output
-    assert "echo" in result.output
-    assert "subtract" in result.output
+    assert "利用可能なツール:" in result.output
+    assert "  - add: Adds two numbers." in result.output
+    assert "  - echo: Echoes the input text." in result.output
+    assert "  - subtract: Subtracts two numbers." in result.output
 
     # verboseありのテスト
     result = await runner.invoke(mcp_client, ["list", "tools", "--verbose"])
     assert result.exit_code == 0
     assert "利用可能なツール:" in result.output
-    assert "  - add:" in result.output
-    assert "    Adds two numbers." in result.output
+    assert "  - add: Adds two numbers." in result.output
     assert "    引数:" in result.output
-    assert "      - a (integer):" in result.output
-    assert "      - b (integer):" in result.output
-    assert "  - echo:" in result.output
-    assert "    Echoes the input text." in result.output
+    assert "      - a (integer): 最初の数値。" in result.output
+    assert "      - b (integer): 2番目の数値。" in result.output
+    assert "  - echo: Echoes the input text." in result.output
     assert "    引数:" in result.output
-    assert "      - text (string):" in result.output
-    assert "  - subtract:" in result.output
-    assert "    Subtracts two numbers." in result.output
+    assert "      - text (string): エコーするテキスト。" in result.output
+    assert "  - subtract: Subtracts two numbers." in result.output
     assert "    引数:" in result.output
-    assert "      - a (integer):" in result.output
-    assert "      - b (integer):" in result.output
+    assert "      - a (integer): 最初の数値。" in result.output
+    assert "      - b (integer): 2番目の数値。" in result.output
 
 
 @pytest.mark.asyncio

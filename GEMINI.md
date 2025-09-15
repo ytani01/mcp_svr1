@@ -2,6 +2,11 @@
 
 Gemini CLI のための開発ルール。
 
+## MCP
+
+- serena activate mcp_svr1
+
+
 ## == プロジェクトの目標
 
 - **FastMCP** を使用した **MCP(Model Context Protocol)サーバー** のPythonプロジェクト。

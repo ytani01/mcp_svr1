@@ -1,5 +1,6 @@
 import asyncio
 import json
+import re
 import textwrap
 
 import asyncclick as click
@@ -98,12 +99,22 @@ async def list_tools(server: str, verbose: bool):
                 if verbose:
                     click.echo("利用可能なツール:")
                     for tool in tools:
-                        click.echo(f"  - {tool.name}:")
-                        description_lines = textwrap.wrap(
-                            tool.description, width=70
+                        # tool.description からツールの説明を抽出
+                        tool_description_match = re.search(
+                            r"^(.*?)(?:\s*Args:|$)",
+                            tool.description,
+                            re.DOTALL
                         )
-                        for line in description_lines:
-                            click.echo(f"    {line}")
+                        if tool_description_match:
+                            tool_description_text = \
+                                tool_description_match.group(1).strip()
+                        else:
+                            tool_description_text = tool.description.strip()
+
+                        click.echo(
+                            f"  - {tool.name}: {tool_description_text}"
+                        )
+
                         if (
                             tool.inputSchema
                             and isinstance(tool.inputSchema, dict)
@@ -116,17 +127,47 @@ async def list_tools(server: str, verbose: bool):
                                 param_description = param_schema.get(
                                     "description", "説明なし"
                                 )
+
+                                # tool.description から引数の説明を抽出
+                                args_description_match = re.search(
+                                    r"Args:\s*(.*)",
+                                    tool.description,
+                                    re.DOTALL
+                                )
+                                if args_description_match:
+                                    args_description_str = \
+                                        args_description_match.group(1)
+                                    # 各引数の説明を抽出
+                                    param_desc_match = re.search(
+                                        rf"{param_name}:\s*(.*?)(?:\s*\w+:\s*|$)",
+                                        args_description_str,
+                                        re.DOTALL
+                                    )
+                                    if param_desc_match:
+                                        param_description = \
+                                            param_desc_match.group(1).strip()
+
                                 click.echo(
-                                    f"      - {param_name} ({param_type}):"
+                                    f"      - {param_name} ({param_type}): "
+                                    f"{param_description}"
                                 )
-                                param_description_lines = textwrap.wrap(
-                                    param_description, width=65
-                                )
-                                for line in param_description_lines:
-                                    click.echo(f"        {line}")
                 else:
-                    tool_names = [tool.name for tool in tools]
-                    click.echo("利用可能なツール: " + ", ".join(tool_names))
+                    click.echo("利用可能なツール:")
+                    for tool in tools:
+                        # tool.description からツールの説明を抽出
+                        tool_description_match = re.search(
+                            r"^(.*?)(?:\s*Args:|$)",
+                            tool.description,
+                            re.DOTALL
+                        )
+                        if tool_description_match:
+                            tool_description_text = \
+                                tool_description_match.group(1).strip()
+                        else:
+                            tool_description_text = tool.description.strip()
+                        click.echo(
+                            f"  - {tool.name}: {tool_description_text}"
+                        )
             else:
                 click.echo("利用可能なツールはありません。")
     except Exception as e:

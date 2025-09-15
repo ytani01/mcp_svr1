@@ -1,6 +1,9 @@
 import asyncio
+
 from fastmcp import Client
+
 from mcp_svr1.__main__ import mcp
+
 
 async def test_fastmcp_client():
     try:
