@@ -1,20 +1,31 @@
 # Project Overview
 
-This is a Python project for an MCP (Model Context Protocol) server using the FastMCP library. It is intended to be used as a template or sample project.
+This project implements an MCP (Multi-Agent Communication Protocol) server and a client.
+
+## Purpose
+The primary purpose of this project is to provide an MCP server that exposes various tools, and a client to interact with these tools. It also serves as a demonstration and development environment for interacting with GeminiCLI, with a strong emphasis on the importance of Japanese docstrings for effective tool selection by GeminiCLI.
 
 ## Tech Stack
-
-- Python 3.13+
-- FastMCP: For creating the MCP server.
-- `uv`: For project and dependency management.
-- `hatch`: For building and versioning.
-- `pytest`: For testing.
-- `ruff`, `mypy`, `pyright`: For linting and type checking.
+- **Language:** Python
+- **Framework:** serena MCP
+- **Dependency Management/Runner:** uv
+- **Testing:** pytest
+- **Linting:** ruff
 
 ## Codebase Structure
-
-- `src/mcp_svr1`: The main MCP server implementation.
-  - `__main__.py`: The entry point for the server.
-  - `tools/`: Contains the tools that the MCP server exposes (e.g., `add`, `echo`, `subtract`, `version`).
-- `src/mcp_client`: A command-line client for the MCP server.
-- `tests/`: Contains tests for the project.
+- `.serena/`: GeminiCLI memory files and project configuration.
+- `archives/`: Historical task-related markdown files.
+- `src/`: Main application source code.
+    - `src/mcp_client/`: MCP client implementation.
+        - `cli.py`: Command-line interface for the client.
+        - `utils.py`: Client utility functions.
+    - `src/mcp_svr1/`: MCP server implementation.
+        - `__main__.py`: Server entry point.
+        - `tools/`: Directory containing individual MCP tools (e.g., `add`, `subtract`, `echo`, `version`).
+        - `utils/`: Server utility functions (e.g., `my_logger.py`).
+- `docs/`: Project documentation (e.g., `CLI.md`).
+- `tests/`: Unit and integration tests for the project.
+- `pyproject.toml`: Project configuration for `uv`, `pytest`, `ruff`.
+- `uv.lock`: Dependency lock file.
+- `.python-version`: Specifies the Python version used.
+- `GEMINI.md`: Guidelines for GeminiCLI interaction, emphasizing docstring importance.

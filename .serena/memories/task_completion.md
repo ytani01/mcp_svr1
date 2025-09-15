@@ -1,17 +1,11 @@
-# Task Completion
+# Task Completion Checklist
 
-When you have completed a task, you should always perform the following steps:
+When a task is completed, the following steps should generally be performed:
 
-1.  **Run linting and type checking** to ensure the code is clean and correct:
-    ```bash
-    uv run ruff check .
-    uv run mypy .
-    uv run pyright
-    ```
-
-2.  **Run tests** to ensure that your changes have not broken anything:
-    ```bash
-    uv run python -m pytest -v
-    ```
-
-3.  If all checks and tests pass, **propose a commit message** to the user. The user is responsible for the final commit.
+1.  **Coding:** Ensure all code changes are implemented according to the task requirements and project conventions.
+2.  **Testing:** Run relevant unit and integration tests (`uv run pytest tests/`) to ensure no regressions were introduced and new features work as expected. Write new tests if necessary to cover new functionality.
+3.  **Debugging:** Address any bugs or issues identified during testing or code review.
+4.  **Linting:** Run linting checks (`ruff check src/`) to ensure code adheres to style guidelines.
+5.  **Documentation:** Update any relevant documentation (e.g., `docs/`, docstrings) to reflect changes.
+6.  **Review:** (If applicable) Prepare changes for code review.
+7.  **Commit:** Commit changes with a clear and concise commit message.
