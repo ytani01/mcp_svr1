@@ -38,11 +38,32 @@ async def test_read_version(runner):
 
 @pytest.mark.asyncio
 async def test_list_tools(runner):
+    # verboseなしのテスト
     result = await runner.invoke(mcp_client, ["list", "tools"])
     assert result.exit_code == 0
+    assert "利用可能なツール: " in result.output
     assert "add" in result.output
-    assert "subtract" in result.output
     assert "echo" in result.output
+    assert "subtract" in result.output
+
+    # verboseありのテスト
+    result = await runner.invoke(mcp_client, ["list", "tools", "--verbose"])
+    assert result.exit_code == 0
+    assert "利用可能なツール:" in result.output
+    assert "  - add:" in result.output
+    assert "    Adds two numbers." in result.output
+    assert "    引数:" in result.output
+    assert "      - a (integer):" in result.output
+    assert "      - b (integer):" in result.output
+    assert "  - echo:" in result.output
+    assert "    Echoes the input text." in result.output
+    assert "    引数:" in result.output
+    assert "      - text (string):" in result.output
+    assert "  - subtract:" in result.output
+    assert "    Subtracts two numbers." in result.output
+    assert "    引数:" in result.output
+    assert "      - a (integer):" in result.output
+    assert "      - b (integer):" in result.output
 
 
 @pytest.mark.asyncio

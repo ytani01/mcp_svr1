@@ -69,3 +69,5 @@ excluded_tools: []
 initial_prompt: ""
 
 project_name: "mcp_svr1"
+
+show_logs: true

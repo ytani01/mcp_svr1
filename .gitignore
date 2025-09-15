@@ -1,6 +1,9 @@
 #
 screenshot_*
 
+# serena
+.serena/
+
 # misc
 *.swp
 *.bak

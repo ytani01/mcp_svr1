@@ -1,5 +1,6 @@
-import pytest
 from typing import Any, cast
+
+import pytest
 from fastmcp.client import Client
 
 from mcp_svr1.__main__ import mcp

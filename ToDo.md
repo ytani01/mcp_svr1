@@ -1,14 +1,19 @@
 # ToDo.md
 
-## 2025-09-13a
+## 2025-09-15a
 
-- [x] mcp_svr1 MCPサーバーの動作確認用として、CLIのクライアントツールを作成したい
-  - [x] 技術情報の検索・調査
-  - [x] 実装方法の検討
-  - [x] 実装方法を Plan.md にまとめる
-  - [x] 既存のコードとの統合について検討し、Plan.mdを修正する。
-  - [x] Plan.mdを元に、実装タスクを Task.md に整理する
-  - [x] Tasks.md を見直し、こまめに Lintingやテストをするように修正する。
-  - [x] Tasks.mdのタスクを実行する。
-  - [x] CLIの使い方を docs/CLI.md にまoとめる。
-  - [x] docs/CLI.md を日本語にする。
+- [x] 'uv run mcp_client shell'の自動テストプログラムを設計する。
+  - まず、どういう方針で実装するか、Plan.mdに箇条書きで、日本語でまとめる。
+  - まだ、実際のコードは書かない
+- [x] 'uv run mcp_client shell'サブコマンドを削除する。
+- [x] 'uv run list'の出力を整形して、人間が読みやすいようにする。
+- [x] 'uv run list'に'--verbose'オプションを追加する。
+  - このオプションは、より詳しい情報を表示するオプション。
+  - 出力は人間が読みやすいように整形すること。
+- [x] 'uv run mcp_client list tools --verbose'で、引数の情報も表示するようにする。
+- [ ] 'uv run mcp_client list tools --verbose'のエラーを修正する
+  - 出力変更に合わせて、テストプログラムも修正すること。
+
+
+
+
