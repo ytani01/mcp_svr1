@@ -5,14 +5,40 @@
 
 ## == インストール
 
+### === ``uv``のインストール
+
+``uv``は、Pythonのプロジェクト管理やバージョン管理のツールです。
+MCPサーバーの実行にも使います。
+
+参考: [uv 公式ドキュメント](https://docs.astral.sh/uv/getting-started/installation/)
+
 ``` bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+### === MCPサーバーのインストール
+
+適切なディレクトリに ``git clone`` してください。
+
+ここでは、ホームディレクト下の`work`ディレクトリ (`$HOME/work`)を想定してます。
+
+``` bash
+cd ~
+mkdir work
+cd work
 git clone https://github.com/ytani01/mcp_svr1
+cd mcp_svr1
+uv venv
+# venv の activate は不要です！
+uv pip install -e .   # 一応
 ```
 
 
-## == Gemini CLIの設定
+## == Gemini CLIでの利用
 
-~/.gemini/settings.json
+### === Gemini CLIの設定例
+
+* ~/.gemini/settings.json
 ``` ini
 {
   "mcpServers": {
@@ -32,8 +58,6 @@ git clone https://github.com/ytani01/mcp_svr1
 ```
 
 
-## == Gemini CLIでの利用方法
-
 ### === MCPサーバーがGemini CLIに認識されていることの確認
 
 
@@ -51,7 +75,14 @@ Configured MCP servers:
     - version
 ```
 
-### === コマンドの実行例
+
+### === **Gemini CLI** での呼び出し方法
+
+**注意**
+
+- このツールが呼び出されるかどうかは、Gemini CLI の判断に依存します。
+- モデルの種類や他のMCPサーバなど、様々な条件で、呼び出されないことがあります。
+
 
 👉 `Gemini CLI`のバージョンではなく、`mcp_svr1`のバージョンを答えるようになります。
 ``` text
@@ -98,6 +129,11 @@ Configured MCP servers:
 
 ✦ 10になります。
 ```
+
+
+## == サーバーテスト用 CLI
+
+[CLIの使用方法](docs/CLI.md)
 
 
 ## == 参考情報
