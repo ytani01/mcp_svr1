@@ -5,16 +5,18 @@ import textwrap
 
 import asyncclick as click
 
-from mcp_client.utils import get_mcp_client
+# 変更: mcp_client.utils から mcp_svr1.cli.utils に変更
+from mcp_svr1.cli.utils import get_mcp_client
 
 
 @click.group()
-def mcp_client():
+# 変更: mcp_client から client_cli に変更
+def client_cli():
     """MCP Client CLI tool."""
     pass
 
 
-@mcp_client.command()
+@client_cli.command()
 @click.argument("tool_name")
 @click.argument("args", nargs=-1)
 @click.option(
@@ -45,7 +47,7 @@ async def call(tool_name: str, server: str, args: tuple[str, ...]):
         click.echo(f"Error calling tool: {e}", err=True)
 
 
-@mcp_client.command()
+@client_cli.command()
 @click.argument("resource_uri")
 @click.option(
     "--server",
@@ -72,7 +74,7 @@ async def read(resource_uri: str, server: str):  # type: ignore
         click.echo(f"Error reading resource: {e}", err=True)
 
 
-@mcp_client.group()
+@client_cli.group()
 def list():
     """List tools or resources on the MCP server."""
     pass
@@ -212,10 +214,3 @@ async def list_resources(server: str, verbose: bool):
                 click.echo("利用可能なリソースはありません。")
     except Exception as e:
         click.echo(f"Error listing resources: {e}", err=True)
-
-
-
-
-
-def main():
-    asyncio.run(mcp_client())
