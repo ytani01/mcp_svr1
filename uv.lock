@@ -300,8 +300,7 @@ wheels = [
 
 [[package]]
 name = "fastmcp"
-version = "2.12.2"
-source = { registry = "https://pypi.org/simple" }
+source = { directory = "../fastmcp" }
 dependencies = [
     { name = "authlib" },
     { name = "cyclopts" },
@@ -315,9 +314,48 @@ dependencies = [
     { name = "python-dotenv" },
     { name = "rich" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/35/8a/c46759bb41a53187191e5b3d963c0bde54783ecc89186a93c4947607b8e4/fastmcp-2.12.2.tar.gz", hash = "sha256:6d13e2f9be57b99763fc22485f9f603daa23bfbca35a8172baa43b283d6fc1ff", size = 5244547, upload-time = "2025-09-03T21:28:09.869Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/5c/0a/7a8d564b1b9909dbfc36eb93d76410a4acfada6b1e13ee451a753bb6dbc2/fastmcp-2.12.2-py3-none-any.whl", hash = "sha256:0b58d68e819c82078d1fd51989d3d81f2be7382d527308b06df55f4d0a4ec94f", size = 312029, upload-time = "2025-09-03T21:28:08.62Z" },
+
+[package.metadata]
+requires-dist = [
+    { name = "authlib", specifier = ">=1.5.2" },
+    { name = "cyclopts", specifier = ">=3.0.0" },
+    { name = "exceptiongroup", specifier = ">=1.2.2" },
+    { name = "httpx", specifier = ">=0.28.1" },
+    { name = "mcp", specifier = ">=1.12.4,<2.0.0" },
+    { name = "openai", marker = "extra == 'openai'", specifier = ">=1.102.0" },
+    { name = "openapi-core", specifier = ">=0.19.5" },
+    { name = "openapi-pydantic", specifier = ">=0.5.1" },
+    { name = "pydantic", extras = ["email"], specifier = ">=2.11.7" },
+    { name = "pyperclip", specifier = ">=1.9.0" },
+    { name = "python-dotenv", specifier = ">=1.1.0" },
+    { name = "rich", specifier = ">=13.9.4" },
+    { name = "websockets", marker = "extra == 'websockets'", specifier = ">=15.0.1" },
+]
+provides-extras = ["openai", "websockets"]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "dirty-equals", specifier = ">=0.9.0" },
+    { name = "fastapi", specifier = ">=0.115.12" },
+    { name = "fastmcp", extras = ["openai"] },
+    { name = "inline-snapshot", extras = ["dirty-equals"], specifier = ">=0.27.2" },
+    { name = "ipython", specifier = ">=8.12.3" },
+    { name = "pdbpp", specifier = ">=0.10.3" },
+    { name = "pre-commit" },
+    { name = "psutil" },
+    { name = "pyinstrument", specifier = ">=5.0.2" },
+    { name = "pyperclip", specifier = ">=1.9.0" },
+    { name = "pytest", specifier = ">=8.3.3" },
+    { name = "pytest-asyncio", specifier = ">=0.23.5" },
+    { name = "pytest-cov", specifier = ">=6.1.1" },
+    { name = "pytest-env", specifier = ">=1.1.5" },
+    { name = "pytest-flakefinder" },
+    { name = "pytest-httpx", specifier = ">=0.35.0" },
+    { name = "pytest-report", specifier = ">=0.2.1" },
+    { name = "pytest-timeout", specifier = ">=2.4.0" },
+    { name = "pytest-xdist", specifier = ">=3.6.1" },
+    { name = "ruff" },
+    { name = "ty", specifier = ">=0.0.1a19" },
 ]
 
 [[package]]
@@ -708,7 +746,7 @@ requires-dist = [
     { name = "asyncclick", specifier = "==8.2.2.2" },
     { name = "asyncio", specifier = ">=4.0.0" },
     { name = "click", specifier = ">=8.2.1" },
-    { name = "fastmcp", specifier = ">=2.12.2" },
+    { name = "fastmcp", directory = "../fastmcp" },
     { name = "mcp", specifier = ">=1.13.1" },
 ]
 

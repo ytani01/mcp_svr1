@@ -19,9 +19,8 @@ dependencies = [
     "asyncio>=4.0.0",
     "click>=8.2.1",
     "asyncclick==8.2.2.2",
-    
-    "fastmcp>=2.12.2",
     "mcp>=1.13.1",
+    "fastmcp",
 ]
 [build-system]
 requires = ["hatchling", "hatch-vcs"]
@@ -71,6 +70,9 @@ dev = [
 [[tool.mypy.overrides]]
 module = ['fastmcp']
 ignore_missing_imports = true
+
+[tool.uv.sources]
+fastmcp = { path = "../fastmcp" }
 
 [tool.hatch.publish.test]
 repository = "https://test.pypi.org/legacy/"

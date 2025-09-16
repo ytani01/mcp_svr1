@@ -22,10 +22,12 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 ここでは、ホームディレクトリ下の`work`ディレクトリ (`$HOME/work`) を想定しています。
 
+
 ```bash
 cd ~
 mkdir work
 cd work
+git clone https://github.com/jlowin/fastmcp.git  # FastMCPの最新版もクローン
 git clone https://github.com/ytani01/mcp_svr1
 cd mcp_svr1
 uv venv
