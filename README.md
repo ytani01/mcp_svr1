@@ -1,7 +1,7 @@
 # mcp_svr1
 
 **FastMCP**を使用した **MCPサーバー** の Pythonプロジェクトです。
-テンプレートやサンプルとして使うことを目的としてます。
+テンプレートおよびサンプルとしての利用を目的としています。
 
 ## == インストール
 
@@ -12,7 +12,7 @@ MCPサーバーの実行にも使います。
 
 参考: [uv 公式ドキュメント](https://docs.astral.sh/uv/getting-started/installation/)
 
-``` bash
+```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
@@ -20,9 +20,9 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 適切なディレクトリに ``git clone`` してください。
 
-ここでは、ホームディレクト下の`work`ディレクトリ (`$HOME/work`)を想定してます。
+ここでは、ホームディレクトリ下の`work`ディレクトリ (`$HOME/work`) を想定しています。
 
-``` bash
+```bash
 cd ~
 mkdir work
 cd work
@@ -30,7 +30,7 @@ git clone https://github.com/ytani01/mcp_svr1
 cd mcp_svr1
 uv venv
 # venv の activate は不要です！
-uv pip install -e .   # 一応
+uv pip install -e .   # MCPサーバーを編集可能モードでインストールします。
 ```
 
 
@@ -39,7 +39,7 @@ uv pip install -e .   # 一応
 ### === Gemini CLIの設定例
 
 * ~/.gemini/settings.json
-``` ini
+```json
 {
   "mcpServers": {
     "mcp_svr1": {
@@ -60,8 +60,7 @@ uv pip install -e .   # 一応
 
 ### === MCPサーバーがGemini CLIに認識されていることの確認
 
-
-``` text
+```text
 > /mcp list
 
 
@@ -85,7 +84,7 @@ Configured MCP servers:
 
 
 👉 `Gemini CLI`のバージョンではなく、`mcp_svr1`のバージョンを答えるようになります。
-``` text
+```text
 > バージョンは？
 
  ╭─
@@ -106,7 +105,7 @@ Configured MCP servers:
 
 
 👉 Gemini CLI が、プロンプトの内容を解釈して、ツールを選んで実行します。
-``` text
+```text
 > add 8 + 2
 
 :
@@ -114,7 +113,7 @@ Configured MCP servers:
  ✦ 10
 ```
 
-``` text
+```text
 > ８と２を足して
 
 :
@@ -122,7 +121,7 @@ Configured MCP servers:
  ✦ 10
 ```
 
-``` text
+```text
 > 8に2を加えるとどうなるかな？
 
 :
@@ -140,3 +139,4 @@ Configured MCP servers:
 
 - [github: FastMCP](https://github.com/jlowin/fastmcp)
 - [github: Gemini CLI](https://github.com/google-gemini/gemini-cli)
+
