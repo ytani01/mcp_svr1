@@ -1,25 +1,29 @@
-# CLI クライアントの使用方法
+# CLIの使用方法
 
-このドキュメントでは、`mcp_client` CLI ツールを使用する方法について説明します。
-
-## インストール
-
-`mcp_client` CLI ツールをインストールするには、`uv` がインストールされていることを確認し、次のコマンドを実行します。
-
-```bash
-uv install
-```
+このドキュメントでは、`mcp_svr1` CLI ツールを使用する方法について説明します。
 
 ## 基本的な使用方法
 
-`mcp_client` ツールは、MCP サーバーと対話するためのいくつかのサブコマンドを提供します。
+`mcp_svr1` ツールは、MCP サーバーの起動と、サーバーと対話するためのクライアント機能を提供します。
 
-### `call` サブコマンド
+### `server` サブコマンド
+
+MCP サーバーを起動します。
+
+```bash
+uv run mcp_svr1 server
+```
+
+### `client` サブコマンド
+
+MCP サーバーと対話するためのクライアント機能を提供します。
+
+#### `call` サブコマンド
 
 MCP サーバー上のツールを呼び出すために使用します。
 
 ```bash
-uv run mcp_client call <TOOL_NAME> [ARGS...]
+uv run mcp_svr1 client call <TOOL_NAME> [ARGS...]
 ```
 
 ツールの引数は `key=value` 形式で指定する必要があります。
@@ -29,21 +33,21 @@ uv run mcp_client call <TOOL_NAME> [ARGS...]
 `add` ツールを引数 `a=1` および `b=2` で呼び出します。
 
 ```bash
-uv run mcp_client call add a=1 b=2
+uv run mcp_svr1 client call add a=1 b=2
 ```
 
 `subtract` ツールを引数 `a=5` および `b=2` で呼び出します。
 
 ```bash
-uv run mcp_client call subtract a=5 b=2
+uv run mcp_svr1 client call subtract a=5 b=2
 ```
 
-### `read` サブコマンド
+#### `read` サブコマンド
 
 MCP サーバーからリソースを読み取るために使用します。
 
 ```bash
-uv run mcp_client read <RESOURCE_URI>
+uv run mcp_svr1 client read <RESOURCE_URI>
 ```
 
 **例:**
@@ -51,43 +55,25 @@ uv run mcp_client read <RESOURCE_URI>
 サーバーバージョンリソースを読み取ります。
 
 ```bash
-uv run mcp_client read server://version
+uv run mcp_svr1 client read server://version
 ```
 
-### `list` サブコマンド
+#### `list` サブコマンド
 
 利用可能なツールまたはリソースを一覧表示するためのサブコマンドを提供します。
 
-#### `list tools`
+##### `list tools`
 
 MCP サーバー上の利用可能なすべてのツールを一覧表示します。
 
 ```bash
-uv run mcp_client list tools
+uv run mcp_svr1 client list tools
 ```
 
-#### `list resources`
+##### `list resources`
 
 MCP サーバー上の利用可能なすべてのリソースを一覧表示します。
 
 ```bash
-uv run mcp_client list resources
-```
-
-## シェルモード
-
-`mcp_client` はインタラクティブなシェルモードも提供します。
-
-```bash
-uv run mcp_client shell
-```
-
-シェル内では、`mcp_client` プレフィックスなしで `call`、`read`、`list` コマンドを直接使用できます。
-
-**例 (シェル内):**
-
-```
-mcp > call add a=1 b=2
-mcp > read server://version
-mcp > list tools
+uv run mcp_svr1 client list resources
 ```
