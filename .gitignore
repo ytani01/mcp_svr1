@@ -1,6 +1,9 @@
 #
 screenshot_*
 
+# Gemini CLI
+.gemini/
+
 # serena
 .serena/
 
