@@ -7,6 +7,8 @@
   - [x] 'uv run mcp_svr1 client ...'の動作を確認して、バグを修正する。
   - [x] '--debug'の他に、短縮形の'-d'も使えるようにする。
   - [x] デバッグオプションは、サブコマンドでも使えるようにする。
+
+## 2025-09-17b
   - [ ] Plan.mdを元に、デバッグオプションをdisableにしたときの出力がただし事をテストするプログラム'tests/test_04_debug_option_disabled.py'を作成し、テストを通す。
   - [ ] Plan.mdと、'tests/test_sample_of_05_debug_option_enable.py'を参考に、デバッグオプションをONにしたときの出力がただし事をテストするプログラム'tests/test_05_debug_option_enable.py'を作成し、テストを通す。
   - [ ] リンティングを実行し、再テスト。
