@@ -1,7 +1,7 @@
 import subprocess
 
 # テストしたいコマンド
-command = ["your_command", "arg1", "arg2"] # 実際のコマンドに置き換えてください
+command = ["your_command", "arg1", "arg2"]  # 実際のコマンドに置き換え
 
 # サブプロセスの stderr をキャプチャする
 result = subprocess.run(
@@ -16,4 +16,5 @@ stderr_output = result.stderr
 print(f"stderr出力: {stderr_output}")
 
 # pytest のテスト内でアサーションを使用する
-assert "エラーメッセージ" in stderr_output # stderr に特定のエラーメッセージが含まれているか確認するなど
+# stderr に特定のエラーメッセージが含まれているか確認するなど
+assert "エラーメッセージ" in stderr_output

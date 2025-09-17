@@ -1,8 +1,9 @@
 from mcp.server.fastmcp import FastMCP
-from ..utils.my_logger import get_logger
-from ..core import get_debug_flag
 
 from mcp_svr1 import __version__
+
+from ..core import get_debug_flag
+from ..utils.my_logger import get_logger
 
 
 def register_version_resource(mcp: FastMCP):
@@ -17,5 +18,6 @@ def register_version_resource(mcp: FastMCP):
         )
     def version() -> str:
         """Returns the MCP server version (read-only resource)."""
-        log.debug(f"version: __package__={__package__}, __version__={__version__}")
+        log.debug(f"version: __package__={__package__}, "
+                  f"__version__={__version__}")
         return f"{__package__} {__version__}"

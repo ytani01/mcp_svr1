@@ -4,7 +4,6 @@ import textwrap
 from typing import Union
 
 import asyncclick as click
-from mcp.server.fastmcp import FastMCP
 from mcp.types import (  # type: ignore
     BlobResourceContents,
     TextResourceContents,
@@ -31,7 +30,7 @@ def mcp_client(ctx):
 @click.pass_context
 async def call(ctx, tool_name: str, server: str, args: tuple[str, ...]):
     """Call a tool on the MCP server."""
-    mcp_instance: FastMCP = ctx.obj.get("mcp_instance")
+
     tool_args = {}
     for arg in args:
         if "=" in arg:
@@ -45,7 +44,7 @@ async def call(ctx, tool_name: str, server: str, args: tuple[str, ...]):
             return
 
     try:
-        client = await get_mcp_client(server, mcp_instance=mcp_instance)
+        client = await get_mcp_client(server)
         async with client:
             result = await client.call_tool(tool_name, tool_args)
             click.echo(json.dumps(result.data.__dict__, indent=2))
@@ -66,9 +65,9 @@ async def read(ctx, resource_uri: str, server: str):  # type: ignore
 
     RESOURCE_URI: The URI of the resource to read (e.g., server://version).
     """
-    mcp_instance: FastMCP = ctx.obj.get("mcp_instance")
+
     try:
-        client = await get_mcp_client(server, mcp_instance=mcp_instance)
+        client = await get_mcp_client(server)
         async with client:
             raw_result = await client.read_resource(resource_uri)
             result: (
@@ -109,9 +108,9 @@ def list():
 @click.pass_context
 async def list_tools(ctx, server: str, verbose: bool):
     """List available tools on the MCP server."""
-    mcp_instance: FastMCP = ctx.obj.get("mcp_instance")
+
     try:
-        client = await get_mcp_client(server, mcp_instance=mcp_instance)
+        client = await get_mcp_client(server)
         async with client:
             tools = await client.list_tools()
             if tools:
@@ -213,9 +212,9 @@ async def list_tools(ctx, server: str, verbose: bool):
 @click.pass_context
 async def list_resources(ctx, server: str, verbose: bool):
     """List available resources on the MCP server."""
-    mcp_instance: FastMCP = ctx.obj.get("mcp_instance")
+
     try:
-        client = await get_mcp_client(server, mcp_instance=mcp_instance)
+        client = await get_mcp_client(server)
         async with client:
             resources = await client.list_resources()
             if resources:

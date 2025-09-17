@@ -1,5 +1,6 @@
 import sys
 
+
 def function_outputting_stderr():
     """標準エラー出力に文字列を出力する関数"""
     sys.stderr.write("これは標準エラー出力です。\n")

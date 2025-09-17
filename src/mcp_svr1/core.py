@@ -1,4 +1,5 @@
 from typing import Optional
+
 from mcp.server.fastmcp import FastMCP
 
 _mcp_instance: Optional[FastMCP] = None

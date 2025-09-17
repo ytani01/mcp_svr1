@@ -9,8 +9,13 @@
   - [x] デバッグオプションは、サブコマンドでも使えるようにする。
 
 ## 2025-09-17b
-  - [ ] Plan.mdを元に、デバッグオプションをdisableにしたときの出力がただし事をテストするプログラム'tests/test_04_debug_option_disabled.py'を作成し、テストを通す。
-  - [ ] Plan.mdと、'tests/test_sample_of_05_debug_option_enable.py'を参考に、デバッグオプションをONにしたときの出力がただし事をテストするプログラム'tests/test_05_debug_option_enable.py'を作成し、テストを通す。
-  - [ ] リンティングを実行し、再テスト。
+  - [x] Plan.mdを元に、デバッグオプションをdisableにしたときの出力がただし事をテストするプログラム'tests/test_04_debug_option_disabled.py'を作成し、テストを通す.
+  - [x] Plan.mdと、'tests/test_sample_of_05_debug_option_enable.py'を参考に、デバッグオプションをONにしたときの出力がただし事をテストするプログラム'tests/test_05_debug_option_enable.py'を作成し、テストを通す.
+  - [x] リンティングを実行し、再テスト.
+
+  - [ ] すべてのサブコマンドでデバッグオプションを指定できるようにする。
+  - [ ] 今後のデバッグや、動作確認のため、デバッグメッセージを埋め込むべき場所を特定して埋め込む。
+
+
 
 

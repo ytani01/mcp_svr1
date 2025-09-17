@@ -47,7 +47,8 @@ async def test_list_tools(runner):
     assert "  - subtract: Subtracts two numbers." in result.output
 
     # verboseありのテスト
-    result = await runner.invoke(cli, ["client", "list", "tools", "--verbose"])
+    result = await runner.invoke(
+        cli, ["client", "list", "tools", "--verbose"])
     assert result.exit_code == 0
     assert "利用可能なツール:" in result.output
     assert "  - add: Adds two numbers." in result.output

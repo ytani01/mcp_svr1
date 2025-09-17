@@ -1,6 +1,7 @@
-import pytest
-import asyncio
 import asyncio.subprocess as asp
+
+import pytest
+
 
 @pytest.mark.asyncio
 async def test_capture_async_subprocess_stderr():
@@ -20,7 +21,8 @@ async def test_capture_async_subprocess_stderr():
     
     # 意図したエラーメッセージがstderrに含まれていることを確認
     # OSによってメッセージが異なるため、両方をチェック
-    assert "command not found" in stderr_output or "No such file or directory" in stderr_output
+    assert ("command not found" in stderr_output or
+            "No such file or directory" in stderr_output)
     
     # プロセスが正常終了していないことを確認
     assert proc.returncode != 0

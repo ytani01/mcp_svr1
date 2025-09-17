@@ -1,7 +1,24 @@
 # Coding Style and Conventions
 
-- Source code comments should be in Japanese.
-- Each line should be within 78 characters.
-- Use `get_logger()` from `my_logger.py` for debug logs.
-- `my_logger.py` should not be modified.
-- Type hints should be used.
+- Chat in Japanese.
+- Research thoroughly before experimenting.
+- `git commit` is user-only; propose concise, one-line English commit messages.
+- Project configuration and management via `uv` and `pyproject.toml`.
+- Always follow the latest `uv` specifications.
+- Use `uv run ...` for command execution; no explicit `venv` activation.
+- Install/add libraries with `uv add ...`; do not use `pip install ...`.
+- Source code comments in Japanese.
+- Max 78 characters per line.
+- Use `my_logger.py`'s `get_logger()` for debug logs; `my_logger.py` should not be modified.
+- Prioritize official documentation.
+- Verify all assumptions.
+- Systematic problem isolation.
+- Utilize detailed logging.
+- Respect user feedback.
+- `ToDo.md` is user-managed.
+- `Tasks.md` is AI-managed, in Japanese.
+- Before starting work, check for `ToDo.md` and `Tasks.md`.
+- If `Tasks.md` exists, execute unchecked tasks sequentially. Mark tasks as `[x]` upon completion.
+- If `Tasks.md` does not exist, create it from the first unchecked item in `ToDo.md`.
+- Always ask for user confirmation before starting tasks in `Tasks.md`.
+- If all `Tasks.md` items are complete, report to the user, prompt user to update `ToDo.md`, and run `uv run rename_task.py`.

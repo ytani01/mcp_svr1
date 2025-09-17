@@ -1,6 +1,8 @@
 from mcp.server.fastmcp import FastMCP
-from ..utils.my_logger import get_logger
+
 from ..core import get_debug_flag
+from ..utils.my_logger import get_logger
+
 
 def register_subtract_tool(mcp: FastMCP):
     log = get_logger(__name__, debug=get_debug_flag())

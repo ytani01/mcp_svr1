@@ -1,4 +1,3 @@
-import asyncio
 import json
 import re
 import textwrap
@@ -7,7 +6,6 @@ import asyncclick as click
 
 # 変更: mcp_client.utils から mcp_svr1.cli.utils に変更
 from mcp_svr1.cli.utils import get_mcp_client
-from mcp_svr1.core import set_mcp_instance
 
 
 @click.group()
@@ -67,8 +65,16 @@ async def read(resource_uri: str, server: str):  # type: ignore
         client = await get_mcp_client(server)
         async with client:
             result = await client.read_resource(resource_uri)
-            if hasattr(result, 'text'):
+            from mcp.types import (
+                BlobResourceContents,
+                TextResourceContents,
+            )
+            if isinstance(result, TextResourceContents):
                 click.echo(result.text)
+            elif isinstance(result, BlobResourceContents):
+                click.echo(
+                    "Binary content received."
+                )
             else:
                 try:
                     click.echo(json.dumps(result, indent=2))
@@ -108,14 +114,15 @@ async def list_tools(server: str, verbose: bool):
                         # tool.description からツールの説明を抽出
                         tool_description_match = re.search(
                             r"^(.*?)(?:\s*Args:|$)",
-                            tool.description,
+                            (tool.description or ""),
                             re.DOTALL
                         )
-                        if tool_description_match:
-                            tool_description_text = \
-                                tool_description_match.group(1).strip()
-                        else:
-                            tool_description_text = tool.description.strip()
+                        tool_description_text = (
+                            tool_description_match.group(1).strip()
+                            if tool_description_match
+                            else ""
+                        )
+                        
 
                         click.echo(
                             f"  - {tool.name}: {tool_description_text}"
@@ -137,7 +144,7 @@ async def list_tools(server: str, verbose: bool):
                                 # tool.description から引数の説明を抽出
                                 args_description_match = re.search(
                                     r"Args:\s*(.*)",
-                                    tool.description,
+                                    (tool.description or ""),
                                     re.DOTALL
                                 )
                                 if args_description_match:
@@ -149,9 +156,11 @@ async def list_tools(server: str, verbose: bool):
                                         args_description_str,
                                         re.DOTALL
                                     )
-                                    if param_desc_match:
-                                        param_description = \
-                                            param_desc_match.group(1).strip()
+                                    param_description = (
+                                        param_desc_match.group(1).strip()
+                                        if param_desc_match
+                                        else ""
+                                    )
 
                                 click.echo(
                                     f"      - {param_name} ({param_type}): "
@@ -163,14 +172,15 @@ async def list_tools(server: str, verbose: bool):
                         # tool.description からツールの説明を抽出
                         tool_description_match = re.search(
                             r"^(.*?)(?:\s*Args:|$)",
-                            tool.description,
+                            (tool.description or ""),
                             re.DOTALL
                         )
-                        if tool_description_match:
-                            tool_description_text = \
-                                tool_description_match.group(1).strip()
-                        else:
-                            tool_description_text = tool.description.strip()
+                        tool_description_text = (
+                            tool_description_match.group(1).strip()
+                            if tool_description_match
+                            else ""
+                        )
+                        
                         click.echo(
                             f"  - {tool.name}: {tool_description_text}"
                         )
@@ -203,7 +213,7 @@ async def list_resources(server: str, verbose: bool):
                     for resource in resources:
                         click.echo(f"  - {resource.uri}:")
                         description_lines = textwrap.wrap(
-                            resource.description, width=70
+                            resource.description or "", width=70
                         )
                         for line in description_lines:
                             click.echo(f"    {line}")
