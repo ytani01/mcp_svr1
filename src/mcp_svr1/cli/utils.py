@@ -5,7 +5,7 @@ from fastmcp import Client
 from mcp_svr1.core import get_mcp_instance
 
 
-async def get_mcp_client(server_url: Optional[str] = None) -> Client:
+async def get_mcp_client(server_url: Optional[str] = None, debug: bool = False) -> Client:
     """
     FastMCPクライアントインスタンスを取得します。
     server_urlがNoneの場合、既存のインメモリサーバーインスタンスに接続します。

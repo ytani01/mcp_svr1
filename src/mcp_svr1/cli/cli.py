@@ -9,11 +9,13 @@ from mcp.types import (  # type: ignore
     TextResourceContents,
 )
 
+from mcp_svr1 import __version__
+from mcp_svr1.cli.click_utils import click_common_opts
 from mcp_svr1.cli.utils import get_mcp_client
 
 
 @click.group()
-@click.pass_context
+@click_common_opts(__version__)
 def mcp_client(ctx):
     """MCP Client CLI tool."""
     ctx.ensure_object(dict)
@@ -27,8 +29,8 @@ def mcp_client(ctx):
     default=None,
     help="""MCP server URL or path to server instance.""",
 )
-@click.pass_context
-async def call(ctx, tool_name: str, server: str, args: tuple[str, ...]):
+@click_common_opts(__version__)
+async def call(tool_name: str, server: str, args: tuple[str, ...]):
     """Call a tool on the MCP server."""
 
     tool_args = {}
@@ -44,7 +46,9 @@ async def call(ctx, tool_name: str, server: str, args: tuple[str, ...]):
             return
 
     try:
-        client = await get_mcp_client(server)
+        client = await get_mcp_client(
+            server, debug=click.get_current_context().obj['DEBUG']
+        )
         async with client:
             result = await client.call_tool(tool_name, tool_args)
             click.echo(json.dumps(result.data.__dict__, indent=2))
@@ -59,15 +63,17 @@ async def call(ctx, tool_name: str, server: str, args: tuple[str, ...]):
     default=None,
     help="""MCP server URL or path to server instance.""",
 )
-@click.pass_context
-async def read(ctx, resource_uri: str, server: str):  # type: ignore
+@click_common_opts(__version__)
+async def read(resource_uri: str, server: str):  # type: ignore
     """Read a resource from the MCP server.
 
     RESOURCE_URI: The URI of the resource to read (e.g., server://version).
     """
 
     try:
-        client = await get_mcp_client(server)
+        client = await get_mcp_client(
+            server, debug=click.get_current_context().obj['DEBUG']
+        )
         async with client:
             raw_result = await client.read_resource(resource_uri)
             result: (
@@ -105,12 +111,14 @@ def list():
     is_flag=True,
     help="""Show verbose tool information.""",
 )
-@click.pass_context
-async def list_tools(ctx, server: str, verbose: bool):
+@click_common_opts(__version__)
+async def list_tools(server: str, verbose: bool):
     """List available tools on the MCP server."""
 
     try:
-        client = await get_mcp_client(server)
+        client = await get_mcp_client(
+            server, debug=click.get_current_context().obj['DEBUG']
+        )
         async with client:
             tools = await client.list_tools()
             if tools:
@@ -209,12 +217,14 @@ async def list_tools(ctx, server: str, verbose: bool):
     is_flag=True,
     help="""Show verbose resource information.""",
 )
-@click.pass_context
-async def list_resources(ctx, server: str, verbose: bool):
+@click_common_opts(__version__)
+async def list_resources(server: str, verbose: bool):
     """List available resources on the MCP server."""
 
     try:
-        client = await get_mcp_client(server)
+        client = await get_mcp_client(
+            server, debug=click.get_current_context().obj['DEBUG']
+        )
         async with client:
             resources = await client.list_resources()
             if resources:

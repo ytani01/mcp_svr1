@@ -1,2 +1,18 @@
-- [ ] すべてのサブコマンドでデバッグオプションを指定できるようにする。
-- [ ] 今後のデバッグや、動作確認のため、デバッグメッセージを埋め込むべき場所を特定して埋め込む。
+- [x] `src/mcp_svr1/cli/cli.py` を読み、クライアントCLIのサブコマンド構造と、`mcp_client` グループに既に適用されているデバッグオプションの処理を確認する。
+- [ ] `src/mcp_svr1/cli/cli.py` 内の `mcp_client` グループから、直接記述されているデバッグオプションの処理（`@click.option('--debug/-d', ...)` と `os.environ` の設定ロジック）を削除し、`@click_common_opts(__version__)` を適用する。
+- [ ] `src/mcp_svr1/cli/cli.py` 内の `call` コマンドに `@click_common_opts(__version__)` デコレータを適用する。
+- [ ] リンティングを実行する。（`call` コマンド適用後）
+- [ ] テストを実行する。（`call` コマンド適用後）
+- [ ] `src/mcp_svr1/cli/cli.py` 内の `read` コマンドに `@click_common_opts(__version__)` デコレータを適用する。
+- [ ] リンティングを実行する。（`read` コマンド適用後）
+- [ ] テストを実行する。（`read` コマンド適用後）
+- [ ] `src/mcp_svr1/cli/cli.py` 内の `list tools` コマンドに `@click_common_opts(__version__)` デコレータを適用する。
+- [ ] リンティングを実行する。（`list tools` コマンド適用後）
+- [ ] テストを実行する。（`list tools` コマンド適用後）
+- [ ] `src/mcp_svr1/cli/cli.py` 内の `list resources` コマンドに `@click_common_opts(__version__)` デコレータを適用する。
+- [ ] リンティングを実行する。（`list resources` コマンド適用後）
+- [ ] テストを実行する。（`list resources` コマンド適用後）
+- [ ] `src/mcp_svr1/cli/cli.py` 内の各コマンドの関数シグネチャから `ctx` 引数と `debug` 引数を削除する。（`click_common_opts` が内部で処理するため）
+- [ ] `src/mcp_svr1/cli/cli.py` 内の `get_mcp_client` の呼び出し箇所を修正し、`ctx.obj['DEBUG']` の値を `debug` パラメータとして渡す。（これは以前の誤った修正を元に戻したため、再度必要になる可能性があります）
+- [ ] リンティングを実行する。（最終確認）
+- [ ] テストを実行する。（最終確認）
