@@ -4,7 +4,9 @@ Gemini CLI のための開発ルール。
 
 ## MCP
 
-- 'serena activate mcp_svr1' で、serenaをアクティベートする
+- `@serena onboarding` を実行
+- `@serena activate mcp_svr1` を実行
+- `@serena switch_modes ["editing", "interactive"]` を実行
 
 
 ## == プロジェクトの目標

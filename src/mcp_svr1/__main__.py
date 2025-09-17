@@ -23,21 +23,28 @@ from .cli.client_cli import client_cli
 
 # FastMCPサーバーインスタンスを初期化します。
 # サーバー名はプロジェクト名と一致させるのが一般的です。
-mcp = FastMCP("mcp_svr1")
-
-# 追加: mcp インスタンスを core に設定
-set_mcp_instance(mcp)
-
-# 各ツールとリソースをFastMCPサーバーに登録します。
-# 新しいツールやリソースを作成した場合は、ここに登録関数を追加してください。
-register_add_tool(mcp)
-register_subtract_tool(mcp)
-register_version_resource(mcp)
-register_echo_tool(mcp)
-
 @click.group()
-def cli():
+@click.option('--debug/-d', default=False, envvar='MCP_SVR1_DEBUG', help='Enable debug logging.')
+@click.pass_context
+def cli(ctx, debug):
     """MCP Server and Client CLI tool."""
+    ctx.ensure_object(dict)
+    ctx.obj['DEBUG'] = debug
+
+    # FastMCPサーバーインスタンスを初期化します。
+    # サーバー名はプロジェクト名と一致させるのが一般的です。
+    mcp = FastMCP("mcp_svr1")
+
+    # 追加: mcp インスタンスを core に設定
+    set_mcp_instance(mcp, debug=debug)
+
+    # 各ツールとリソースをFastMCPサーバーに登録します。
+    # 新しいツールやリソースを作成した場合は、ここに登録関数を追加してください。
+    register_add_tool(mcp)
+    register_subtract_tool(mcp)
+    register_version_resource(mcp)
+    register_echo_tool(mcp)
+
     pass
 
 @cli.command()

@@ -7,6 +7,7 @@ import asyncclick as click
 
 # 変更: mcp_client.utils から mcp_svr1.cli.utils に変更
 from mcp_svr1.cli.utils import get_mcp_client
+from mcp_svr1.core import set_mcp_instance
 
 
 @click.group()
@@ -30,7 +31,10 @@ async def call(tool_name: str, server: str, args: tuple[str, ...]):
     for arg in args:
         if "=" in arg:
             key, value = arg.split("=", 1)
-            tool_args[key] = json.loads(value) # Attempt to parse as JSON
+            try:
+                tool_args[key] = json.loads(value)
+            except json.JSONDecodeError:
+                tool_args[key] = value
         else:
             click.echo(
                 f"Invalid argument format: {arg}. Expected key=value.",
