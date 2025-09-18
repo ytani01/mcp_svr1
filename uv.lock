@@ -173,6 +173,25 @@ wheels = [
 ]
 
 [[package]]
+name = "clickutils"
+source = { directory = "../clickutils" }
+dependencies = [
+    { name = "click" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "click", specifier = ">=8.2.1" }]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "flake8", specifier = ">=7.3.0" },
+    { name = "mypy", specifier = ">=1.18.1" },
+    { name = "pyright", specifier = ">=1.1.405" },
+    { name = "pytest", specifier = ">=8.2.2" },
+    { name = "ruff", specifier = ">=0.13.0" },
+]
+
+[[package]]
 name = "colorama"
 version = "0.4.6"
 source = { registry = "https://pypi.org/simple" }
@@ -722,6 +741,7 @@ dependencies = [
     { name = "asyncclick" },
     { name = "asyncio" },
     { name = "click" },
+    { name = "clickutils" },
     { name = "fastmcp" },
     { name = "mcp" },
 ]
@@ -746,6 +766,7 @@ requires-dist = [
     { name = "asyncclick", specifier = "==8.2.2.2" },
     { name = "asyncio", specifier = ">=4.0.0" },
     { name = "click", specifier = ">=8.2.1" },
+    { name = "clickutils", directory = "../clickutils" },
     { name = "fastmcp", directory = "../fastmcp" },
     { name = "mcp", specifier = ">=1.13.1" },
 ]

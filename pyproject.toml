@@ -21,6 +21,7 @@ dependencies = [
     "asyncclick==8.2.2.2",
     "mcp>=1.13.1",
     "fastmcp",
+    "clickutils",
 ]
 [build-system]
 requires = ["hatchling", "hatch-vcs"]
@@ -73,6 +74,7 @@ ignore_missing_imports = true
 
 [tool.uv.sources]
 fastmcp = { path = "../fastmcp" }
+clickutils = { path = "../clickutils" }
 
 [tool.hatch.publish.test]
 repository = "https://test.pypi.org/legacy/"
