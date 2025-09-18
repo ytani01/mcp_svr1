@@ -1,8 +1,11 @@
 import json
 import re
 import textwrap
-
 import asyncclick as click
+
+from clickutils import click_common_opts
+
+from .. import __version__, get_logger
 
 # 変更: mcp_client.utils から mcp_svr1.cli.utils に変更
 from mcp_svr1.cli.utils import get_mcp_client
@@ -10,9 +13,12 @@ from mcp_svr1.cli.utils import get_mcp_client
 
 @click.group()
 # 変更: mcp_client から client_cli に変更
-def client_cli():
+@click_common_opts(__version__)
+def client_cli(ctx, debug):
     """MCP Client CLI tool."""
-    pass
+
+    __log = get_logger(__name__, debug)
+    __log.debug("command name = %a", ctx.command.name)
 
 
 @client_cli.command()
@@ -23,8 +29,12 @@ def client_cli():
     default=None,
     help="""MCP server URL or path to server instance."""
 )
-async def call(tool_name: str, server: str, args: tuple[str, ...]):
+@click_common_opts(__version__)
+async def call(ctx, tool_name: str, server: str, args: tuple[str, ...], debug):
     """Call a tool on the MCP server."""
+    __log = get_logger(__name__, debug)
+    __log.debug("command name = %a", ctx.command.name)
+
     tool_args = {}
     for arg in args:
         if "=" in arg:
@@ -56,11 +66,15 @@ async def call(tool_name: str, server: str, args: tuple[str, ...]):
     default=None,
     help="""MCP server URL or path to server instance."""
 )
-async def read(resource_uri: str, server: str):  # type: ignore
+@click_common_opts(__version__)
+async def read(ctx, resource_uri: str, server: str, debug: bool):  # type: ignore
     """Read a resource from the MCP server.
 
     RESOURCE_URI: The URI of the resource to read (e.g., server://version).
     """
+    __log = get_logger(__name__, debug)
+    __log.debug("command name = %a", ctx.command.name)
+
     try:
         client = await get_mcp_client(server)
         async with client:
@@ -69,26 +83,31 @@ async def read(resource_uri: str, server: str):  # type: ignore
                 BlobResourceContents,
                 TextResourceContents,
             )
-            if isinstance(result, TextResourceContents):
-                click.echo(result.text)
-            elif isinstance(result, BlobResourceContents):
-                click.echo(
-                    "Binary content received."
-                )
-            else:
-                try:
-                    click.echo(json.dumps(result, indent=2))
-                except TypeError:
-                    click.echo(repr(result))
+            for _r in result:
+                __log.debug("type(_r)=%s", type(_r))
+                __log.debug("_r.uri=%s", _r.uri)
+                __log.debug("_r.text='%s'", _r.text)
+                if isinstance(result, TextResourceContents):
+                    click.echo(result.text)
+                elif isinstance(result, BlobResourceContents):
+                    click.echo("Binary content received.")
+                else:
+                    try:
+                        click.echo(json.dumps(_r, indent=2))
+                    except TypeError:
+                        click.echo(repr(_r))
     except Exception as e:
         click.echo(f"Error reading resource: {e}", err=True)
 
 
 @client_cli.group()
-def list():
+@click_common_opts(__version__)
+def list(ctx, debug):
     """List tools or resources on the MCP server."""
-    pass
+    __log = get_logger(__name__, debug)
+    __log.debug("command name = %a", ctx.command.name)
 
+    
 
 @list.command(name="tools")
 @click.option(
@@ -101,8 +120,12 @@ def list():
     is_flag=True,
     help="""Show verbose tool information."""
 )
-async def list_tools(server: str, verbose: bool):
+@click_common_opts(__version__)
+async def list_tools(ctx, server: str, verbose: bool, debug):
     """List available tools on the MCP server."""
+    __log = get_logger(__name__, debug)
+    __log.debug("command name = %a", ctx.command.name)
+
     try:
         client = await get_mcp_client(server)
         async with client:
@@ -201,8 +224,12 @@ async def list_tools(server: str, verbose: bool):
     is_flag=True,
     help="""Show verbose resource information."""
 )
-async def list_resources(server: str, verbose: bool):
+@click_common_opts(__version__)
+async def list_resources(ctx, server: str, verbose: bool, debug):
     """List available resources on the MCP server."""
+    __log = get_logger(__name__, debug)
+    __log.debug("command name = %a", ctx.command.name)
+
     try:
         client = await get_mcp_client(server)
         async with client:

@@ -11,7 +11,9 @@ FastMCPサーバーのメインエントリーポイント。
 import asyncclick as click
 from mcp.server.fastmcp import FastMCP
 
-# 追加: client_cli をインポート
+from clickutils import click_common_opts
+
+from . import __version__, get_logger
 from .cli.client_cli import client_cli
 from .core import get_mcp_instance, set_mcp_instance
 from .tools.add import register_add_tool
@@ -23,11 +25,12 @@ from .tools.version import register_version_resource
 # FastMCPサーバーインスタンスを初期化します。
 # サーバー名はプロジェクト名と一致させるのが一般的です。
 @click.group()
-@click.option('--debug/-d', default=False, envvar='MCP_SVR1_DEBUG',
-              help='Enable debug logging.')
-@click.pass_context
+@click_common_opts(__version__)
 def cli(ctx, debug):
     """MCP Server and Client CLI tool."""
+    __log = get_logger(__name__, debug)
+    __log.debug("command name = %a", ctx.command.name)
+
     ctx.ensure_object(dict)
     ctx.obj['DEBUG'] = debug
 
@@ -46,10 +49,9 @@ def cli(ctx, debug):
     register_version_resource(mcp)
     register_echo_tool(mcp)
 
-    pass
-
 @cli.command()
-async def server():
+@click_common_opts(__version__)
+async def server(ctx, debug):
     """Start the MCP server."""
     # transport="stdio" は標準入出力を使用することを示します。
     # 他のトランスポートオプション（例: "tcp"）も利用可能です。

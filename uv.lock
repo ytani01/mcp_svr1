@@ -176,11 +176,15 @@ wheels = [
 name = "clickutils"
 source = { directory = "../clickutils" }
 dependencies = [
+    { name = "asyncclick" },
     { name = "click" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "click", specifier = ">=8.2.1" }]
+requires-dist = [
+    { name = "asyncclick", specifier = ">=8.2.2.2" },
+    { name = "click", specifier = ">=8.2.1" },
+]
 
 [package.metadata.requires-dev]
 dev = [

@@ -80,4 +80,3 @@ clickutils = { path = "../clickutils" }
 repository = "https://test.pypi.org/legacy/"
 
 [tool.hatch.publish.pypi]
-
