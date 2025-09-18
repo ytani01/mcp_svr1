@@ -5,7 +5,7 @@ screenshot_*
 .gemini/
 
 # serena
-.serena/
+.serena
 
 # misc
 *.swp
