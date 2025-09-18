@@ -2,17 +2,25 @@
 
 Gemini CLI のための開発ルール。
 
-## MCP
 
-- `@serena onboarding` を実行
-- `@serena activate mcp_svr1` を実行
-- `@serena switch_modes ["editing", "interactive"]` を実行
+## MCP Servers
+
+- serena
+
+``` text
+@serena activate current directory
+@serena onboarding
+@serena switch_mode ["planning", "one-shot"]
+@serena switch_mode ["editing", "interactive"]
+@serena think_about_whether_you_are_done
+```
 
 
 ## == プロジェクトの目標
 
 - **FastMCP** を使用した **MCP(Model Context Protocol)サーバー** のPythonプロジェクト。
 - テンプレート、または、サンプルとして使うことが目的
+
 
 ### === 参考情報
 

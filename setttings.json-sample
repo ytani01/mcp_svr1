@@ -1,12 +1,7 @@
 {
   "mcpServers": {
     "mcp_svr1": {
-      "command": "uv",
-      "args": [
-        "run",
-        "mcp_svr1",
-        "server"
-      ],
+      "command": "uv", "args": ["run", "mcp_svr1", "server"],
       "cwd": "$HOME/work/mcp_svr1"
     }
   },
