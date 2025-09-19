@@ -1,10 +1,7 @@
-# `archive_file.py` スクリプトの機能をテスト。ファイルのアーカイブ成功、
-# ステータス指定アーカイブ、ファイルが見つからない場合、およびアーカイブ先
-# ディレクトリが見つからない場合の挙動を `subprocess` で検証。
 import os
+import pytest
 import subprocess
 
-import pytest
 
 TEST_ARCHIVE_DIR = "test_archives"
 TEST_FILE_NAME = "test_file"
@@ -18,7 +15,6 @@ TEST_STAT = "stat1"
 RESULT_OK = 0
 RESULT_FILE_NOTFOUND = 1
 RESULT_DIR_NOTFOUND = 2
-
 
 @pytest.fixture(autouse=True)
 def setup_and_teardown():
@@ -44,8 +40,7 @@ def test_archive_file_success():
     with open(TEST_FILE, "w") as f:
         f.write("This is a test file.\n")
 
-    cmdline = (f"uv run archive_file.py --debug --dstdir {TEST_ARCHIVE_DIR} "
-               f"{TEST_FILE}")
+    cmdline = f"uv run archive_file.py --debug --dstdir {TEST_ARCHIVE_DIR} {TEST_FILE}"
     print()
     print()
     print(f"* cmdline = {cmdline}")
@@ -105,8 +100,7 @@ def test_archive_file_set_status():
 
 
 def test_file_not_found():
-    cmdline = (f"uv run archive_file.py --debug --dstdir {TEST_ARCHIVE_DIR} "
-               f"{TEST_FILE_NOTFOUND}")
+    cmdline = f"uv run archive_file.py --debug --dstdir {TEST_ARCHIVE_DIR} {TEST_FILE_NOTFOUND}"
     print()
     print()
     print(f"* cmdline = {cmdline}")
@@ -128,8 +122,7 @@ def test_directory_not_found():
     with open(TEST_FILE, "w") as f:
         f.write("This is a test file.\n")
 
-    cmdline = (f"uv run archive_file.py --debug --dstdir {TEST_DIR_NOTFOUND} "
-               f"{TEST_FILE}")
+    cmdline = f"uv run archive_file.py --debug --dstdir {TEST_DIR_NOTFOUND} {TEST_FILE}"
     print()
     print()
     print(f"* cmdline = {cmdline}")
