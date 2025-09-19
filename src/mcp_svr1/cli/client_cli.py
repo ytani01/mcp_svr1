@@ -1,9 +1,8 @@
 import json
 import re
 import textwrap
-import asyncclick as click
 
-from clickutils import click_common_opts
+from clickutils import click_common_opts, import_click
 
 from .. import __version__, get_logger
 
@@ -11,14 +10,21 @@ from .. import __version__, get_logger
 from mcp_svr1.cli.utils import get_mcp_client
 
 
-@click.group()
+click = import_click(async_flag=True)
+
+
+@click.group(invoke_without_command=True)
 # 変更: mcp_client から client_cli に変更
-@click_common_opts(__version__)
+@click_common_opts(click, __version__)
 def client_cli(ctx, debug):
     """MCP Client CLI tool."""
 
     __log = get_logger(__name__, debug)
     __log.debug("command name = %a", ctx.command.name)
+    __log.debug("subcommand = %a", ctx.invoked_subcommand)
+
+    if not ctx.invoked_subcommand:
+        click.echo(ctx.get_help())
 
 
 @client_cli.command()
@@ -29,7 +35,7 @@ def client_cli(ctx, debug):
     default=None,
     help="""MCP server URL or path to server instance."""
 )
-@click_common_opts(__version__)
+@click_common_opts(click, __version__)
 async def call(ctx, tool_name: str, server: str, args: tuple[str, ...], debug):
     """Call a tool on the MCP server."""
     __log = get_logger(__name__, debug)
@@ -66,7 +72,7 @@ async def call(ctx, tool_name: str, server: str, args: tuple[str, ...], debug):
     default=None,
     help="""MCP server URL or path to server instance."""
 )
-@click_common_opts(__version__)
+@click_common_opts(click, __version__)
 async def read(ctx, resource_uri: str, server: str, debug: bool):  # type: ignore
     """Read a resource from the MCP server.
 
@@ -100,27 +106,30 @@ async def read(ctx, resource_uri: str, server: str, debug: bool):  # type: ignor
         click.echo(f"Error reading resource: {e}", err=True)
 
 
-@client_cli.group()
-@click_common_opts(__version__)
+@client_cli.group(invoke_without_command=True)
+@click_common_opts(click, __version__)
 def list(ctx, debug):
     """List tools or resources on the MCP server."""
     __log = get_logger(__name__, debug)
     __log.debug("command name = %a", ctx.command.name)
+    __log.debug("subcommand = %a", ctx.invoked_subcommand)
 
+    if not ctx.invoked_subcommand:
+        click.echo(ctx.get_help())
     
 
 @list.command(name="tools")
 @click.option(
     "--server",
     default=None,
-    help="""MCP server URL or path to server instance."""
+    help="MCP server URL or path to server instance."
 )
 @click.option(
-    "--verbose",
+    "--verbose", "-v",
     is_flag=True,
     help="""Show verbose tool information."""
 )
-@click_common_opts(__version__)
+@click_common_opts(click, __version__, use_v=False)
 async def list_tools(ctx, server: str, verbose: bool, debug):
     """List available tools on the MCP server."""
     __log = get_logger(__name__, debug)
@@ -132,7 +141,7 @@ async def list_tools(ctx, server: str, verbose: bool, debug):
             tools = await client.list_tools()
             if tools:
                 if verbose:
-                    click.echo("利用可能なツール:")
+                    click.echo("Tools:")
                     for tool in tools:
                         # tool.description からツールの説明を抽出
                         tool_description_match = re.search(
@@ -156,7 +165,7 @@ async def list_tools(ctx, server: str, verbose: bool, debug):
                             and isinstance(tool.inputSchema, dict)
                             and tool.inputSchema.get('properties')
                         ):
-                            click.echo("    引数:")
+                            click.echo("      Args:")
                             for param_name, param_schema in \
                                     tool.inputSchema['properties'].items():
                                 param_type = param_schema.get("type", "不明")
@@ -164,7 +173,7 @@ async def list_tools(ctx, server: str, verbose: bool, debug):
                                     "description", "説明なし"
                                 )
 
-                                # tool.description から引数の説明を抽出
+                                # tool.description からArgsの説明を抽出
                                 args_description_match = re.search(
                                     r"Args:\s*(.*)",
                                     (tool.description or ""),
@@ -173,7 +182,7 @@ async def list_tools(ctx, server: str, verbose: bool, debug):
                                 if args_description_match:
                                     args_description_str = \
                                         args_description_match.group(1)
-                                    # 各引数の説明を抽出
+                                    # 各Argsの説明を抽出
                                     param_desc_match = re.search(
                                         rf"{param_name}:\s*(.*?)(?:\s*\w+:\s*|$)",
                                         args_description_str,
@@ -190,7 +199,7 @@ async def list_tools(ctx, server: str, verbose: bool, debug):
                                     f"{param_description}"
                                 )
                 else:
-                    click.echo("利用可能なツール:")
+                    click.echo("Tools:")
                     for tool in tools:
                         # tool.description からツールの説明を抽出
                         tool_description_match = re.search(
@@ -220,11 +229,11 @@ async def list_tools(ctx, server: str, verbose: bool, debug):
     help="""MCP server URL or path to server instance."""
 )
 @click.option(
-    "--verbose",
+    "--verbose", "-v",
     is_flag=True,
     help="""Show verbose resource information."""
 )
-@click_common_opts(__version__)
+@click_common_opts(click, __version__)
 async def list_resources(ctx, server: str, verbose: bool, debug):
     """List available resources on the MCP server."""
     __log = get_logger(__name__, debug)
@@ -234,24 +243,24 @@ async def list_resources(ctx, server: str, verbose: bool, debug):
         client = await get_mcp_client(server)
         async with client:
             resources = await client.list_resources()
+            __log.debug("resources: %s", resources)
+
             if resources:
                 if verbose:
-                    click.echo("利用可能なリソース:")
+                    click.echo("Resources:")
                     for resource in resources:
-                        click.echo(f"  - {resource.uri}:")
-                        description_lines = textwrap.wrap(
-                            resource.description or "", width=70
-                        )
-                        for line in description_lines:
-                            click.echo(f"    {line}")
+                        __log.debug("resource: %s", resource)
+
+                        click.echo(f"  - {resource.name}: {resource.uri}")
+                        click.echo(f"      {resource.description}")
                 else:
                     resource_uris = [
                         str(resource.uri) for resource in resources
                     ]
                     click.echo(
-                        "利用可能なリソース: " + ", ".join(resource_uris)
+                        "Resources: " + ", ".join(resource_uris)
                     )
             else:
                 click.echo("利用可能なリソースはありません。")
     except Exception as e:
-        click.echo(f"Error listing resources: {e}", err=True)
+        __log.error("%s: %s", type(e).__name__, e)

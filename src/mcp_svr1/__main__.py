@@ -8,10 +8,8 @@ FastMCPサーバーのメインエントリーポイント。
 ツールとリソースを登録してサーバーを実行します。
 テンプレートとして、新しいツールやリソースを追加する際の参考にしてください。
 """
-import asyncclick as click
+from clickutils import click_common_opts, import_click
 from mcp.server.fastmcp import FastMCP
-
-from clickutils import click_common_opts
 
 from . import __version__, get_logger
 from .cli.client_cli import client_cli
@@ -21,15 +19,18 @@ from .tools.echo import register_echo_tool
 from .tools.subtract import register_subtract_tool
 from .tools.version import register_version_resource
 
+click = import_click(async_flag=True)
+
 
 # FastMCPサーバーインスタンスを初期化します。
 # サーバー名はプロジェクト名と一致させるのが一般的です。
-@click.group()
-@click_common_opts(__version__)
+@click.group(invoke_without_command=True)
+@click_common_opts(click, __version__)
 def cli(ctx, debug):
     """MCP Server and Client CLI tool."""
     __log = get_logger(__name__, debug)
     __log.debug("command name = %a", ctx.command.name)
+    __log.debug("subcommand = %a", ctx.invoked_subcommand)
 
     ctx.ensure_object(dict)
     ctx.obj['DEBUG'] = debug
@@ -49,10 +50,17 @@ def cli(ctx, debug):
     register_version_resource(mcp)
     register_echo_tool(mcp)
 
+    if not ctx.invoked_subcommand:
+        click.echo(ctx.get_help())
+
+
 @cli.command()
-@click_common_opts(__version__)
+@click_common_opts(click, __version__)
 async def server(ctx, debug):
     """Start the MCP server."""
+    __log = get_logger(__name__, debug)
+    __log.debug("command name = %a", ctx.command.name)
+
     # transport="stdio" は標準入出力を使用することを示します。
     # 他のトランスポートオプション（例: "tcp"）も利用可能です。
     mcp = get_mcp_instance()

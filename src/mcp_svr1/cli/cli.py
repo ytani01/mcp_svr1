@@ -3,20 +3,22 @@ import re
 import textwrap
 from typing import Union
 
-import asyncclick as click
 from mcp.types import (  # type: ignore
     BlobResourceContents,
     TextResourceContents,
 )
 
-from clickutils import click_common_opts
+from clickutils import click_common_opts, import_click
 
 from mcp_svr1 import __version__
 from mcp_svr1.cli.utils import get_mcp_client
 
 
+click = import_click(async_flag=True)
+
+
 @click.group()
-@click_common_opts(__version__)
+@click_common_opts(click, __version__)
 def mcp_client(ctx, debug):
     """MCP Client CLI tool."""
     ctx.ensure_object(dict)
@@ -30,7 +32,7 @@ def mcp_client(ctx, debug):
     default=None,
     help="""MCP server URL or path to server instance.""",
 )
-@click_common_opts(__version__)
+@click_common_opts(click, __version__)
 async def call(ctx, tool_name: str, server: str, args: tuple[str, ...], debug):
     """Call a tool on the MCP server."""
 
@@ -64,7 +66,7 @@ async def call(ctx, tool_name: str, server: str, args: tuple[str, ...], debug):
     default=None,
     help="""MCP server URL or path to server instance.""",
 )
-@click_common_opts(__version__)
+@click_common_opts(click, __version__)
 async def read(ctx, resource_uri: str, server: str, debug):  # type: ignore
     """Read a resource from the MCP server.
 
@@ -112,7 +114,7 @@ def list(ctx, debug):
     is_flag=True,
     help="""Show verbose tool information.""",
 )
-@click_common_opts(__version__)
+@click_common_opts(click, __version__)
 async def list_tools(ctx, server: str, verbose: bool, debug):
     """List available tools on the MCP server."""
 
@@ -218,7 +220,7 @@ async def list_tools(ctx, server: str, verbose: bool, debug):
     is_flag=True,
     help="""Show verbose resource information.""",
 )
-@click_common_opts(__version__)
+@click_common_opts(click, __version__)
 async def list_resources(ctx, server: str, verbose: bool, debug):
     """List available resources on the MCP server."""
 
