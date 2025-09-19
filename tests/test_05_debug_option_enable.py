@@ -1,28 +1,27 @@
-import asyncio
-import os
-import tempfile
+# `uv run mcp_svr1 --debug client call add a=1 b=2` コマンドを
+# 非同期で実行し、標準エラー出力を一時ファイルにリダイレクトして、
+# デバッグログに特定のメッセージ（`add: a=1, b=2`）が含まれることをテスト。
+import subprocess
 
 import pytest
 
 
 @pytest.mark.asyncio
 async def test_debug_diagnostic():
-    with tempfile.NamedTemporaryFile(
-        mode='w+', encoding='utf-8', delete=False) as stderr_file:
-        log_file_path = stderr_file.name
-        command = ["uv", "run", "mcp_svr1", "--debug", "client", "call",
-                   "add", "a=1", "b=2"]
-        process = await asyncio.create_subprocess_exec(
-            *command,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=stderr_file.fileno(),
-            env=dict(os.environ, FASTMCP_LOG_LEVEL='DEBUG')
-        )
-        await process.wait()
+    """debug option test."""
 
-    with open(log_file_path, 'r', encoding='utf-8') as f:
-        stderr_output = f.read()
-    os.remove(log_file_path)
+    cmdline = "uv run mcp_svr1 --debug client call add a=1 b=2"
+    print()
+    print()
+    print(f"* cmdline = {cmdline}")
 
-    print(f"Captured stderr:\n{stderr_output}")  # Manual inspection
-    assert "add: a=1, b=2" in stderr_output
+    result = subprocess.run(cmdline.split(), capture_output=True, text=True)
+
+    print()
+    print(f"* stdout\n{result.stdout}")
+    print(f"* stderr\n{result.stderr}")
+    print(f"* returncode = {result.returncode}")
+    print()
+
+    assert result.returncode == 0
+    assert "add: a=1, b=2" in result.stderr

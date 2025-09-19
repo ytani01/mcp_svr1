@@ -1,31 +1,23 @@
-import asyncio
+# `uv run mcp_svr1 client call add a=1 b=2` コマンドを
+# `--debug` オプションなしで実行し、標準エラー出力をキャプチャ。
+# `FASTMCP_LOG_LEVEL=CRITICAL` 環境変数を設定し、デバッグ出力を無効化し、
+# 特定のデバッグメッセージが含まれないことをアサートする。
 import os
-import tempfile
-
-import pytest
+import subprocess
 
 
-@pytest.mark.asyncio
-async def test_debug_option_disabled():
-    with tempfile.NamedTemporaryFile(
-        mode='w+', encoding='utf-8', delete=False) as stderr_file:
-        log_file_path = stderr_file.name
-        # --debug オプションを付けない
-        command = ["uv", "run", "mcp_svr1", "client", "call", "add",
-                   "a=1", "b=2"]
-        process = await asyncio.create_subprocess_exec(
-            *command,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=stderr_file.fileno(),
-            # FASTMCP_LOG_LEVEL を CRITICAL に設定
-            env=dict(os.environ, FASTMCP_LOG_LEVEL='CRITICAL')
-        )
-        await process.wait()
+def test_debug_option_disabled():
+    command = ["uv", "run", "mcp_svr1", "client", "call", "add",
+               "a=1", "b=2"]
 
-    with open(log_file_path, 'r', encoding='utf-8') as f:
-        stderr_output = f.read()
-    os.remove(log_file_path)
+    # FASTMCP_LOG_LEVEL を CRITICAL に設定
+    result = subprocess.run(
+        command,
+        capture_output=True,
+        text=True,
+        env=dict(os.environ, FASTMCP_LOG_LEVEL='CRITICAL')
+    )
 
-    print(f"Captured stderr (disabled):\n{stderr_output}")  # Manual inspect
+    assert result.returncode == 0
     # デバッグメッセージが含まれないことをアサート
-    assert "add: a=1, b=2" not in stderr_output
+    assert "add: a=1, b=2" not in result.stderr

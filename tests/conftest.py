@@ -1,3 +1,6 @@
+# `pytest` フィクスチャを定義し、テストセッション全体で `FastMCP`
+# インスタンスをセットアップ。`add`、`subtract`、`version`、`echo` ツールを
+# 登録し、テスト実行時に MCP サーバーの環境を準備する役割を担う。
 import pytest
 from mcp.server.fastmcp import FastMCP
 

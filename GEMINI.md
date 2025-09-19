@@ -137,7 +137,7 @@ Gemini CLI のための開発ルール。
 - `Tasks.md` のすべてのタスクが完了した場合
   1. ユーザーに完了を報告
   2. ユーザーが、`ToDo.md` を更新するよう促す。
-  2. `uv run rename_task.py` を実行する。
+  2. `uv run arvhie_file.py Tasks.md` を実行する。
      このスクリプトは:
      - `Tasks.md` を `yyyymmdd-HHMM-Tasks-done.md` にリネームする
        （`yyyymmdd` = 日付, `HHMM` = 時刻）。
