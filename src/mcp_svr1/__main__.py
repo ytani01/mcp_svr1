@@ -8,6 +8,8 @@ FastMCPサーバーのメインエントリーポイント。
 ツールとリソースを登録してサーバーを実行します。
 テンプレートとして、新しいツールやリソースを追加する際の参考にしてください。
 """
+import asyncclick as click
+
 from clickutils import click_common_opts, import_click
 from mcp.server.fastmcp import FastMCP
 
@@ -18,8 +20,6 @@ from .tools.add import register_add_tool
 from .tools.echo import register_echo_tool
 from .tools.subtract import register_subtract_tool
 from .tools.version import register_version_resource
-
-click = import_click(async_flag=True)
 
 
 # FastMCPサーバーインスタンスを初期化します。

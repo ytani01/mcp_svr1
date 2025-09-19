@@ -1,6 +1,6 @@
+import asyncclick as click
 import json
 import re
-import textwrap
 
 from clickutils import click_common_opts, import_click
 
@@ -8,9 +8,6 @@ from .. import __version__, get_logger
 
 # 変更: mcp_client.utils から mcp_svr1.cli.utils に変更
 from mcp_svr1.cli.utils import get_mcp_client
-
-
-click = import_click(async_flag=True)
 
 
 @click.group(invoke_without_command=True)

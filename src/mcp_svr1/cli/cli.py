@@ -1,3 +1,4 @@
+import asyncclick as click
 import json
 import re
 import textwrap
@@ -8,13 +9,10 @@ from mcp.types import (  # type: ignore
     TextResourceContents,
 )
 
-from clickutils import click_common_opts, import_click
+from clickutils import click_common_opts, get_logger
 
 from mcp_svr1 import __version__
 from mcp_svr1.cli.utils import get_mcp_client
-
-
-click = import_click(async_flag=True)
 
 
 @click.group()
@@ -33,8 +31,13 @@ def mcp_client(ctx, debug):
     help="""MCP server URL or path to server instance.""",
 )
 @click_common_opts(click, __version__)
-async def call(ctx, tool_name: str, server: str, args: tuple[str, ...], debug):
+async def call(
+        ctx, tool_name: str, server: str, args: tuple[str, ...], debug
+):
     """Call a tool on the MCP server."""
+
+    __log = get_logger(__name__, debug)
+    __log.debug("command name = %a", ctx.command.name)
 
     tool_args = {}
     for arg in args:
